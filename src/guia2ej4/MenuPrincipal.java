@@ -6,6 +6,7 @@
 package guia2ej4;
 
 import java.util.TreeSet;
+import javax.swing.DefaultComboBoxModel;
 import sun.security.action.GetBooleanSecurityPropertyAction;
 
 /**
@@ -22,6 +23,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null); // Centrar pantalla 
         cargarProductos();
+       
     }
 
     /**
@@ -121,6 +123,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        BusquedaPorRubro bpr=new BusquedaPorRubro();
+        bpr.setVisible(true);
+        escritorio.add(bpr);
+        escritorio.moveToFront(bpr);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
@@ -190,4 +198,6 @@ private void cargarProductos(){
     listaProductos.add(new Producto(10,"Azúcar x 1 kilo",520,Categorias.COMESTIBLE,100));
     
 }
+
+    
 }

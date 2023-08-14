@@ -47,6 +47,11 @@ private DefaultTableModel modelo=new DefaultTableModel(){
 
         jLabel2.setText("Escriba los primeros caracteres");
 
+        jTnombreBuscado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTnombreBuscadoActionPerformed(evt);
+            }
+        });
         jTnombreBuscado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTnombreBuscadoKeyReleased(evt);
@@ -113,11 +118,15 @@ private DefaultTableModel modelo=new DefaultTableModel(){
                     producto.getCodigo(),
                     producto.getDescripcion(),
                     producto.getPrecio(),
-                    producto.getPrecio()
+                    producto.getStock()
                 });
             }
         }
     }//GEN-LAST:event_jTnombreBuscadoKeyReleased
+
+    private void jTnombreBuscadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTnombreBuscadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTnombreBuscadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
