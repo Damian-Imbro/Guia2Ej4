@@ -5,17 +5,24 @@
  */
 package guia2ej4;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Damian
  */
 public class BusquedaPorPrecio extends javax.swing.JInternalFrame {
-
+private DefaultTableModel modelo=new DefaultTableModel(){
+    public boolean isCellEditable(int f, int c){
+        return false;
+    }
+};
     /**
      * Creates new form BusquedaPorPrecio
      */
     public BusquedaPorPrecio() {
         initComponents();
+        armarCabecera();
     }
 
     /**
@@ -28,33 +35,157 @@ public class BusquedaPorPrecio extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jTFPrecioMin = new javax.swing.JTextField();
+        jTFPrecioMax = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTPrecios = new javax.swing.JTable();
 
+        setClosable(true);
         setPreferredSize(new java.awt.Dimension(396, 242));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Listado por precio");
+
+        jLabel2.setText("Entre $");
+
+        jLabel3.setText("y");
+
+        jTFPrecioMin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFPrecioMinKeyReleased(evt);
+            }
+        });
+
+        jTFPrecioMax.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFPrecioMaxKeyReleased(evt);
+            }
+        });
+
+        jTPrecios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTPrecios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(jLabel1)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTFPrecioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTFPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 188, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jTFPrecioMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTFPrecioMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 113, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTFPrecioMinKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFPrecioMinKeyReleased
+        // TODO add your handling code here:
+        borrarFilas();
+        if (jTFPrecioMin.getText().length()==0) {
+            jTFPrecioMin.setText("0");
+        }
+        if (jTFPrecioMax.getText().length()==0){
+            jTFPrecioMax.setText("99999999");
+        }
+        
+        for (Producto producto : MenuPrincipal.listaProductos) {
+            if (producto.getPrecio()>Double.parseDouble(jTFPrecioMin.getText())&&
+                    producto.getPrecio()<Double.parseDouble(jTFPrecioMax.getText())) {
+                modelo.addRow(new Object[]{
+                    producto.getCodigo(),
+                    producto.getDescripcion(),
+                    producto.getPrecio(),
+                    producto.getStock()
+                });
+            }
+        }
+    }//GEN-LAST:event_jTFPrecioMinKeyReleased
+
+    private void jTFPrecioMaxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFPrecioMaxKeyReleased
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        borrarFilas();
+        if (jTFPrecioMin.getText().length()==0) {
+            jTFPrecioMin.setText("0");
+        }
+        if (jTFPrecioMax.getText().length()==0){
+            jTFPrecioMax.setText("99999999");
+        }
+        
+        for (Producto producto : MenuPrincipal.listaProductos) {
+            if (producto.getPrecio()>Double.parseDouble(jTFPrecioMin.getText())&&
+                    producto.getPrecio()<Double.parseDouble(jTFPrecioMax.getText())) {
+                modelo.addRow(new Object[]{
+                    producto.getCodigo(),
+                    producto.getDescripcion(),
+                    producto.getPrecio(),
+                    producto.getStock()
+                });
+            }
+        }        
+    }//GEN-LAST:event_jTFPrecioMaxKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTFPrecioMax;
+    private javax.swing.JTextField jTFPrecioMin;
+    private javax.swing.JTable jTPrecios;
     // End of variables declaration//GEN-END:variables
+
+    private void armarCabecera() {
+    modelo.addColumn("Código");
+    modelo.addColumn("Descripción");
+    modelo.addColumn("Precio");
+    modelo.addColumn("Stock");
+    jTPrecios.setModel(modelo);
+    }
+    private void borrarFilas(){
+    for (int f=jTPrecios.getRowCount()-1;f>=0;f--){
+        modelo.removeRow(f);
+    }
+}
 }
