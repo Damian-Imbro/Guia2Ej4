@@ -122,7 +122,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        //Menu agregar producto
+        escritorio.removeAll();
+        escritorio.repaint();
+        Productos prod=new Productos();
+        prod.setVisible(true);
+        escritorio.add(prod);
+        escritorio.moveToFront(prod);
+        
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -210,8 +216,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 private void cargarProductos(){
     //producto de ejemplo, falta armar que se cargue por planilla
-    listaProductos.add(new Producto(10,"Azúcar x 1 kilo",520,Categorias.COMESTIBLE,100));
-    
+    listaProductos.add(new Producto(1,"Azúcar x 1 kilo",520,Categorias.COMESTIBLE,100));
+    listaProductos.add(new Producto(2, "Yerba 500gr", 750, Categorias.COMESTIBLE, 55));
+   listaProductos.add(new Producto(3, "Jabon Dave", 500, Categorias.PERFUMERIA, 81));
+   listaProductos.add(new Producto(4, "Detergente", 420, Categorias.LIMPIEZA, 105));
 }
 
     
